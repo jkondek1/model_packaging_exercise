@@ -30,7 +30,7 @@ def modify_other_stuff(data: pd.DataFrame) -> pd.DataFrame:
     data = data.drop(columns=['address', 'checkout', 'checkin'])
     df_rbb_rating = np.where(
         data['rating'] == 'New',
-        np.NaN,
+        np.nan,
         data['rating']
     )
     df_rbb_rating_mean = pd.Series(df_rbb_rating.astype(float)).dropna().mean()
@@ -40,4 +40,10 @@ def modify_other_stuff(data: pd.DataFrame) -> pd.DataFrame:
         data['rating']
     ).astype(float)
     data['rating'] = df_rbb_rating
+    return data
+
+def run_preprocessing(data: pd.DataFrame) -> pd.DataFrame:
+    data = create_host_counts(data)
+    data = drop_cols(data)
+    data = modify_other_stuff(data)
     return data

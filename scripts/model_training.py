@@ -1,4 +1,5 @@
 import pandas as pd
+import pickle
 import sklearn
 from sklearn.model_selection import train_test_split
 
@@ -15,7 +16,7 @@ def encode(data: pd.DataFrame, encoder: sklearn.preprocessing.OneHotEncoder) -> 
     data = pd.concat([data, data_address_0_ohe], axis=1)
     return data
 
-#encoder = OneHotEncoder(sparse_output=False)
+
 
 def create_train_test_split(data: pd.DataFrame) -> tuple:
     X_train, X_test, y_train, y_test = train_test_split(
@@ -28,6 +29,8 @@ def create_train_test_split(data: pd.DataFrame) -> tuple:
 
 def fit_model(train, label, model):
     model.fit(train, label)
+    with open('model.pkl', 'wb') as f:
+        pickle.dump(model, f)
     return model
 
 #model_lr = LinearRegression()
