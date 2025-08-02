@@ -1,11 +1,12 @@
 import pandas as pd
+import sklearn
 from sklearn.model_selection import train_test_split
 
 def modify_pre_training(data: pd.DataFrame) -> pd.DataFrame:
     data['reviews'] = data['reviews'].str.replace(',', '').astype(int)
     return data
 
-def encode(data: pd.DataFrame, encoder) -> pd.DataFrame:
+def encode(data: pd.DataFrame, encoder: sklearn.preprocessing.OneHotEncoder) -> pd.DataFrame:
     data_address_0_ohe = encoder.fit_transform(data[['address_0']])
     data_address_0_ohe = pd.DataFrame(
         data_address_0_ohe,
